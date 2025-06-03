@@ -1378,7 +1378,7 @@ Also, for the new process:
 Ex: how it works in unix/linux
 - To create a child, use: fork()
 - To replace the child's memory with a new program, use: exec()
-```C
+```bash
 pid = fork();         // Creates a new process
 if (pid == 0)
     execlp("ls", "ls", NULL);  // The child runs the 'ls' command
@@ -1497,7 +1497,7 @@ Buffer types:
 - Bounded: limited size -> producer must wait if full.
 Code setup:
 Shared memory:
-```c
+```bash
 #define BUFFER_SIZE 10
 item buffer[BUFFER_SIZE];
 int in = 0;
@@ -1572,7 +1572,7 @@ Messages are stored temporarily in a queue (buffer), the buffer can have differe
 Posix shared memory is and ipc method where two or more processes share a region of memory to communicate directly
 ### how it works
 1. Create a shared memory object:
-   ```c
+   ```bash
    fd = shm_open(name, O_CREAT | O_RDWR, 0666);
    ```
 	- `name`: shared memory name.
@@ -1580,18 +1580,18 @@ Posix shared memory is and ipc method where two or more processes share a region
 	- `O_RDWR`: open for reading/writing.
 	- Returns a **file descriptor** (like an ID for that memory region).
 2. Set the size of memory
-   ```c
+   ```bash
 	Ftruncate(fd, 4096);
 	```
 	- sets the size to 4096 bytes (4 kb)
 3. Map the memory to the process address space
-   ```c
+   ```bash
     ptr = mmap(...);
     ```
     - `ptr` now points to the shared memory block.
 	- Both processes can now **read/write** to `ptr`
 4. Remove the memory object(done by consumer after use)
-   ```c
+   ```bash
 	shm_unlink(name);
 	```
 
@@ -1609,7 +1609,7 @@ Pipes are older and simpler ipc methods, used to send a stream of data between t
 - Used between parent and child processes on the same machine
 ### how to use
 1. Create pipe:
-   ```c
+   ```bash
    	pipe(int fd[2]);
 	```
 	- `fd[0]`: read end
@@ -1779,7 +1779,7 @@ There are **main ways** these libraries are implemented:
 - Can be implemented at **user level**, **kernel level**, or a **hybrid**.
 ### Example:
 To create a thread using Pthreads:
-```C
+```bash
 pthread_create(&tid, NULL, do_work, NULL);
 ```
 This line starts a new thread and runs the `do_work` function.
@@ -1802,7 +1802,7 @@ Pthreads also provide:
     - On Linux, often mapped to Pthreads.
     - On Windows, mapped to Windows threads.
 Ex: 
-```C
+```bash
 public class MyThread extends Thread {
   public void run() {
     System.out.println("Thread is running");
