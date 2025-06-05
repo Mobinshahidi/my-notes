@@ -1,6 +1,6 @@
 ---
-title: chap-4-questions
-description: chap-4-questions
+title: chap 4 questions
+description: chap 4 questions
 ---
 
 ## ✅ Chapter 4 – Practice Questions

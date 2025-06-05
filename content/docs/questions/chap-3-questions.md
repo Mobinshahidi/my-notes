@@ -1,6 +1,6 @@
 ---
-title: chap-3-questions
-description: chap-3-questions
+title: chap 3 questions
+description: chap 3 questions
 ---
 
 

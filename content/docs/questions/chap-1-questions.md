@@ -1,6 +1,6 @@
 ---
-title: chap-1-questions
-description: chap-1-questions
+title: chap 1 questions
+description: chap 1 questions
 ---
 
 ## ✅ Chapter 1 – Practice Questions
