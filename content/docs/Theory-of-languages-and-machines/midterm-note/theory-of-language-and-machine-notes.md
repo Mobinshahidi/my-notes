@@ -274,6 +274,121 @@ Original DFA:
 |F|Set of final states|
 |DFA|FA with unique transition for each input|
 |L(M)|Language accepted by machine `M`|
+
+## **Equivalence of Finite Automata**=
+### **Definition:**
+
+Two finite automata **A₁ and A₂** are said to be **equivalent** if:
+
+```
+L(A₁) = L(A₂)
+```
+
+That is, both accept **exactly the same set of strings** over the alphabet.
+### **Why Check Equivalence?**
+
+* To verify correctness after **minimization**
+* To compare two automata with **different designs**
+* To confirm **DFA ↔ NFA** or **DFA ↔ regular expression** transformations
+* To validate that two systems **implement the same behavior**
+### **Methods to Check Equivalence**
+
+#### **1. Minimize Both Automata and Compare**
+
+* Minimize both A₁ and A₂ using standard DFA minimization.
+* If the **minimized DFAs are identical** (same structure), they are equivalent.
+#### **2. Symmetric Difference Method**
+
+* Construct a DFA for:
+
+```
+L = L(A₁) Δ L(A₂)
+```
+
+* If **L = ∅** (language is empty), then A₁ and A₂ are equivalent.
+#### **3. Table-Filling Method (State Equivalence Method)**
+
+This is a systematic method used for checking whether two **states** (or two **automata**) are equivalent.
+
+**Steps:**
+
+1. **List all unordered pairs** of states.
+2. **Mark all distinguishable pairs**, where:
+
+   * One state is accepting, the other is not.
+3. For each unmarked pair (p, q):
+
+   * For every input symbol `a`, compute:
+
+     * δ(p, a) = p′
+     * δ(q, a) = q′
+     * If (p′, q′) is marked, then mark (p, q).
+4. **Repeat** until no more changes.
+5. **Unmarked pairs are equivalent.**
+
+   * If the start states are unmarked → the automata are equivalent.
+### **Example**
+
+Let’s compare the following **two DFAs** over alphabet `{0,1}`:
+#### **DFA A₁**
+
+* **States**: {A, B}
+* **Start state**: A
+* **Accepting states**: {B}
+* **Transitions**:
+
+  * A →0→ A
+  * A →1→ B
+  * B →0→ B
+  * B →1→ B
+#### **DFA A₂**
+
+* **States**: {X, Y}
+* **Start state**: X
+* **Accepting states**: {Y}
+* **Transitions**:
+
+  * X →0→ X
+  * X →1→ Y
+  * Y →0→ Y
+  * Y →1→ Y
+### Goal: Are A₁ and A₂ equivalent?
+
+#### Step 1: Compare the structure
+
+Both automata:
+
+* Start in a loop on `0`
+* Transition to accepting state on first `1`
+* Stay in accepting state on any input
+
+#### Step 2: Build table of state pairs
+
+We compare:
+
+* (A, X)
+* (A, Y)
+* (B, X)
+* (B, Y)
+
+We focus on:
+
+* (A, X) → both start states
+* (B, Y) → both accepting
+* (A, Y) and (B, X) → mismatched acceptances (mark as distinguishable)
+
+#### Step 3: Look at transitions from (A, X)
+
+On `0`: A → A, X → X → (A, X) → same
+On `1`: A → B, X → Y → (B, Y) → both accepting → same
+
+So (A, X) is **not distinguishable**.
+
+#### Final: Start states A and X are equivalent
+
+→ Therefore, **DFA A₁ and A₂ are equivalent**.
+
+
 # 1.2
 ## nondeterminism
 ### key concepts
@@ -315,6 +430,37 @@ Original DFA:
 	   - easier to design and combine than dfas
 	   - often lead to simpler solutions for complex patterns
 	   - but ultimately, any nfa can be replaced by a dfa
+### What is an ε-NFA?
+
+An **ε-NFA** (Epsilon Non-deterministic Finite Automaton) is like a normal NFA, but it allows **ε-transitions**:
+* An **ε-transition** is a move from one state to another **without consuming any input**.
+* That means the automaton can “jump” between states **freely** using ε.
+### Why are ε-transitions useful?
+They make automata construction easier for:
+* Union
+* Concatenation
+* Kleene star operations (∗)
+### How to Convert an ε-NFA to NFA or DFA:
+#### Step 1: **ε-closure**
+* For every state `q`, calculate its **ε-closure**:
+  * ε-closure(q) = All states reachable from `q` using only ε-transitions (including `q` itself).
+#### Step 2: **Convert ε-NFA to NFA**
+* For each state `q` and input symbol `a`:
+  * Consider all states reachable via ε-closure(q).
+  * For each of those states, if there’s a transition on `a`, follow it.
+  * Then take ε-closure of the resulting states.
+* This removes all ε-transitions and creates a standard NFA.
+#### Step 3: **Convert NFA to DFA** (Subset Construction)
+* Use powerset construction:
+  * Each state in the DFA is a **set of states** from the NFA.
+  * Start with ε-closure of the start state.
+  * Create transitions for each input symbol.
+  * Mark as accepting any set that contains an accepting state from NFA.![[IMG-20250609174443161.png]]
+### Important Note:
+
+* ε-NFAs, NFAs, and DFAs are all equivalent in **power** – they recognize the same set of **regular languages**.
+* But DFAs have **no nondeterminism or ε-transitions**, and are **usually bigger**.
+
 ## Summary Table
 
 |Term|Description|
@@ -386,6 +532,83 @@ Original DFA:
 |Operators|`+`, `.`, `*`, `()`|
 |Equivalence|RE = NFA = DFA|
 |Precedence|`*` > Concatenation > `+`|
+
+### **What is Arden’s Theorem?**
+
+Arden's Theorem is a tool to solve regular expression equations of the form:
+
+```
+R = Q + RP
+```
+
+**Solution:**
+
+```
+R = QP*
+```
+
+**Conditions:**
+
+* `P` must **not contain ε** (the empty string).
+* The theorem guarantees a **unique solution** for `R`.
+
+---
+
+### **Why is it important?**
+
+Arden's Theorem is used in the algebraic method to convert:
+
+* DFA to Regular Expression
+* NFA to Regular Expression
+
+by setting up equations for each state and solving them step by step.
+
+### **Steps to Convert DFA/NFA to Regular Expression (Algebraic Method)**
+
+#### 1. Label the states
+
+Assign a variable (e.g., R₀, R₁, R₂, ...) to each state.
+
+#### 2. Write system of equations
+
+For each state, write an equation representing all transitions:
+
+* For each input symbol `a` that goes from state `i` to state `j`, add `aRⱼ`.
+* If it's the start state, include `ε`.
+
+#### 3. Solve using Arden’s Theorem
+
+Start from the last equation and substitute backward.
+Apply Arden's Theorem where applicable to isolate each variable.
+
+#### 4. Final Answer
+
+The expression for the variable corresponding to the start state gives the regular expression for the language, assuming it leads to a final state.
+### **Example**
+
+Suppose we have a DFA with:
+
+* States: `q0` (start), `q1` (final)
+* Transitions:
+
+  * `q0 --a→ q0`
+  * `q0 --b→ q1`
+  * `q1 --a→ q1`
+
+Equations:
+
+```
+R0 = aR0 + bR1 + ε
+R1 = aR1
+```
+
+Solution:
+
+```
+R1 = εa*
+R0 = (b a* + ε) a*
+```
+
 
 # 1.4
 ## nonregular languages
@@ -605,4 +828,17 @@ Original DFA:
 		    - Each group from the final partition becomes a **single state** in the minimized DFA.
 		    - The start state and final states are updated accordingly.
 		- for unreachable states,(states that doesn't have any income) we remove that and proceed 
-	- 
+- ∅ + R = R
+- ∅R + R∅ = ∅
+- εR = Rε = R
+- ε* = ε and ∅* = ε
+- R + R = R
+- R_R_ = R*
+- RR* = R*R
+- (R*)* = R*
+- ε + RR* = ε + R_R = R_
+- (PQ)_P = P(QP)_
+- (P + Q)* = (P_Q_)* = (P* + Q*)*
+- (P + Q)R = PR + QR and R(P + Q) = RP + RQ 
+- for converting the nfa or dfa to regex, we should write everything backward, from final states we should write what state made that input to the final state and so on for all of the states, then we try to solve them using above notes (you need to find the regex for final state, it should be so much simple that not anymore be simple) and when we have multiple final state, we find their regex then we take union from them. ![[IMG-20250609183933351.png]]
+- 
