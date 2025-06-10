@@ -3,7 +3,7 @@ title: theory of language and machine notes
 description: theory of language and machine notes
 ---
 
-# 0.1
+# 1.1
 ## automata, computability and complexity
 ### 3 core idea
 ### 1. Automata theory (finite models of computation)
@@ -275,7 +275,7 @@ Original DFA:
 |DFA|FA with unique transition for each input|
 |L(M)|Language accepted by machine `M`|
 
-## **Equivalence of Finite Automata**=
+## **Equivalence of Finite Automata**
 ### **Definition:**
 
 Two finite automata **A₁ and A₂** are said to be **equivalent** if:
@@ -314,7 +314,6 @@ This is a systematic method used for checking whether two **states** (or two **a
 
 1. **List all unordered pairs** of states.
 2. **Mark all distinguishable pairs**, where:
-
    * One state is accepting, the other is not.
 3. For each unmarked pair (p, q):
 
@@ -703,6 +702,27 @@ R0 = (b a* + ε) a*
 	   - a derivation is a sequence of steps from `S` to a string of terminals
 	   - example: `S ⇒ aSb ⇒ aaSbb ⇒ aabb`
 	   - you apply rules step by step
+	 **Example:**
+	Consider the CFG:
+	```
+	S → aSb
+	S → ε
+	```
+	For the string **"`aabb`"**, the derivation tree would look like this:
+	```
+		   S
+		 /   \
+		a     S
+			 /  \
+			a    S
+				 |
+				ε
+	```
+	### **Steps for Building a Derivation Tree**:
+	1. **Start with the start symbol (S).**
+	2. **Apply production rules to expand non-terminals** until you reach a string of terminals (a valid string in the language).
+	3. **Each level of the tree corresponds to a production application.** The leaves of the tree will consist of terminal symbols.
+
 6. leftmost and rightmost derivations
 	   - leftmost derivation: always expand the leftmost non-terminal
 	   - rightmost derivation: always expand the rightmost non-terminal
@@ -720,6 +740,22 @@ R0 = (b a* + ε) a*
 		   - arithmetic grammar can have multiple interpretations:
 		   - `E + E * E → could mean (E + E) * E or E + (E * E)`
 		   - ambiguity can cause problems in compilers and parsers
+	 **Ambiguity in CFGs:**
+	A CFG is **ambiguous** if there is more than one way to derive the same string. This leads to multiple valid derivation trees for a single string.
+	**Example of Ambiguous Grammar:**
+	```
+	E → E + E
+	E → E * E
+	E → id
+	```
+	For the string **"id + id * id"**, we can have two different derivation trees based on the order of applying the rules, leading to different interpretations.
+### **Relation Between CFG and PDA (Pushdown Automata)**:
+- A **PDA** (Pushdown Automaton) can be used to accept context-free languages.
+- For a given CFG, we can construct a PDA that accepts the same language, and vice versa.
+### **Closure Properties of Context-Free Languages**:
+1. **Union**: The union of two context-free languages is context-free.
+2. **Concatenation**: The concatenation of two context-free languages is context-free.    
+3. **Kleene Star**: The Kleene star of a context-free language is context-free.
 
 ## Summary Table
 
@@ -841,4 +877,7 @@ R0 = (b a* + ε) a*
 - (P + Q)* = (P_Q_)* = (P* + Q*)*
 - (P + Q)R = PR + QR and R(P + Q) = RP + RQ 
 - for converting the nfa or dfa to regex, we should write everything backward, from final states we should write what state made that input to the final state and so on for all of the states, then we try to solve them using above notes (you need to find the regex for final state, it should be so much simple that not anymore be simple) and when we have multiple final state, we find their regex then we take union from them. ![[IMG-20250609183933351.png]]
-- 
+- for pumping lemma, we should first define a p with whatever size, then  we should define them, then we should define cases, that our y how place in our new strings, like if p is 3 and our string is `a^n.b^n` we write it like this : `aaabbb` and then we should define cases that how our y place (because our new string `S = xyz` should our `y^i` and if this works and our language accepted, the language is regular) in this example, our y case is three : 1. y is in a part : if i is 2 -> `aaaaabbb` 2. y is in b part 3. y is between a and b part and if none of them was in our language, the language is not regular and important case is our `|xy| <= p` and rest of our condition not to be satisfy, for this, its work. **at first when you try to divide it, you should remember that `|xy| <= p`.**
+- in pda there are two cases that we understand string is accepted, first one is that we reach the final state, and second one is when we find out the stack is empty 
+- equivalence of pda and cfg means language of the pda and cfg is the same
+- for converting cfg to a pda, we should start and write leftmost variable and expand it until we have only terminals, then we try to draw pda for it 
