@@ -1,3 +1,8 @@
+---
+title:  csp & local serch, midterm
+description: csp & local search, midterm
+---
+
 
 # ⭐ **WEEK 6 — PART 1: Constraint Satisfaction Problems (CSPs)**
 

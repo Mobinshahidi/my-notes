@@ -1,3 +1,9 @@
+---
+title: states, midterm
+description:  states, midterm
+
+---
+
 # 🌟 **WEEK 1 — State Spaces (Foundations of AI)**
 
 This is the simplest topic **conceptually**, but it is also **one of the most frequently tested topics** on CS188 midterms.

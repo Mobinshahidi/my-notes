@@ -1,3 +1,9 @@
+---
+title:  LP, midterm
+description: LP, midterm
+---
+
+
 # Week 1 – Part 2: Linear Optimization (LP)
 
 Linear Optimization (Linear Programming, LP) is about choosing the best values for variables when both the **objective** and **constraints** are linear.  

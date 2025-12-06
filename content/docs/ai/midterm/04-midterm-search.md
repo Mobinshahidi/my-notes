@@ -1,3 +1,9 @@
+---
+title:  search, midterm
+description: search, midterm
+---
+
+
 # 🚀 WEEK 4 — SEARCH ALGORITHMS
 
 Search algorithms help an agent navigate a **state space** to find a path from an initial state to a goal state.  

@@ -1,3 +1,9 @@
+---
+title:  game theory , midterm
+description: game thery, midterm
+---
+
+
 # 🚀 **WEEK 8 — GAME THEORY (Maximum Detail Version)**
 
 Game theory studies **strategic interactions** between rational decision-makers.

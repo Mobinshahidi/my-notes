@@ -1,3 +1,9 @@
+---
+title: MAB, midterm
+description:  MAB, midterm
+---
+
+
 # 🚀 WEEK 3 — Multi-Armed Bandits (MAB)
 
 Multi-Armed Bandits (MAB) model the problem of making decisions under uncertainty where:

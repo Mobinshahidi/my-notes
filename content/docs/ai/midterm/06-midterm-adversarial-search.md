@@ -1,3 +1,9 @@
+---
+title:  adversarial search, midterm
+description: adversarial search, midterm
+---
+
+
 # 🚀 **WEEK 7 — ADVERSARIAL SEARCH (Deep Explanation)**
 
 _(Minimax • Alpha-Beta • Expectimax)_
