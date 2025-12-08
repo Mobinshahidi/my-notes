@@ -2,16 +2,6 @@
 title: csp cheatsheet
 description: cheatsheet
 ---
-Great — the next concept after MAB (based on your course order) is:
-
-# CSP — Constraint Satisfaction Problems
-
-Here is the cheat sheet in the exact format you want, with all math inside `$$ ... $$` and bullet-style like LP & MAB.
-
--
-
-# CSP (Constraint Satisfaction Problems) — CHEAT SHEET
-
 1. CSP defined by:
 	   - variables → $( X_1, X_2, \dots, X_n )$
 	   - domains → possible values for each variable
